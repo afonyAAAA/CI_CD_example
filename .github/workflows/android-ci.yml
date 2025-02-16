@@ -37,8 +37,28 @@ jobs:
       - name: Даем права на выполнение Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Запуск сборки
-        run: ./gradlew assembleDebug
+      - name: Восстанавливаем keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/keystore.jks
+
+      - name: Сборка подписанного APK и AAB
+        run: ./gradlew assembleRelease bundleRelease
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Запуск тестов
         run: ./gradlew test
+
+      - name: Установка Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: Загрузка APK в Firebase App Distribution
+        run: |
+          echo '${{ secrets.FIREBASE_CREDENTIALS }}' > firebase.json
+          firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
+            --app <FIREBASE_APP_ID> \
+            --release-notes "Автоматическая сборка" \
+            --groups testers \
+            --token "$(firebase login:ci --json < firebase.json | jq -r .refresh_token)"
