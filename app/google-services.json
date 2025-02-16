@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "268316066317",
+    "project_id": "ci-cd-e22d2",
+    "storage_bucket": "ci-cd-e22d2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268316066317:android:473c843b36984b98c2cb44",
+        "android_client_info": {
+          "package_name": "ru.funky.ci_cd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNXvS3DHc2mke013ZSOrSkh-MPjqJTl78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
