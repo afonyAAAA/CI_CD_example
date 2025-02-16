@@ -55,10 +55,12 @@ jobs:
         run: curl -sL https://firebase.tools | bash
 
       - name: Загрузка APK в Firebase App Distribution
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         run: |
           echo '${{ secrets.FIREBASE_CREDENTIALS }}' > firebase.json
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
-            --app <FIREBASE_APP_ID> \
+            --app $FIREBASE_APP_ID \
             --release-notes "Автоматическая сборка" \
             --groups testers \
             --token "$(firebase login:ci --json < firebase.json | jq -r .refresh_token)"
