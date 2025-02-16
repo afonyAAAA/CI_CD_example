@@ -56,7 +56,7 @@ jobs:
 
       - name: Загрузка APK в Firebase App Distribution
         env:
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_APP_ID: "1:268316066317:android:473c843b36984b98c2cb44"
         run: |
           echo '${{ secrets.FIREBASE_CREDENTIALS }}' > firebase.json
           export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase.json
